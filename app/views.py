@@ -5,6 +5,13 @@ from datetime import datetime
 
 from django.http import HttpResponse
 
+import csv
+
+file = "app/Top 10,000 Shopify Stores Dataset - October 2020.csv"
+
+with open(file, newline='') as f:
+    reader = csv.reader(f)
+    data = list(reader)
 
 def index(request):
     now = datetime.now()
@@ -16,4 +23,4 @@ def index(request):
         </body>
     </html>
     '''
-    return HttpResponse(html)
+    return render(request, 'index.html', {})
