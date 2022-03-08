@@ -207,36 +207,15 @@ ul {
                 <div class="col-lg-10 mx-auto">
                     <div class="career-search mb-60">
 
-                        <form action="#" class="career-form mb-60">
-                            <div class="row">
-                                <div class="col-md-6 col-lg-4 my-3">
-                                    <div style="margin-top:0px" class="select-container">
-                                        <select class="custom-select">
-                                            <option selected="">Category</option>
-                                            <option value="1">Fashion</option>
-                                            <option value="2">Cosmetics</option>
-                                            <option value="3">Electronics</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                 <div class="col-md-6 col-lg-4 my-3">
-                                    <div class="select-container">
-                                        <select class="custom-select">
-                                            <option selected="">Select Job Type</option>
-                                            <option value="1">Ui designer</option>
-                                            <option value="2">JS developer</option>
-                                            <option value="3">Web developer</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4 my-3">
-                                    <input type="text" placeholder="Search" style="height:100%;width:100%;" id="search-submit"></input>
-                                </div>
-                            </div>
-                        </form>
+                        
 
                         <div class="filter-result">
-                            <p class="mb-30 ff-montserrat">Total products count : {{product_count}}</p>
+                            <p class="mb-30 text-center ff-montserrat">Total number of store collections : {{total_number_of_collections}}</p>
+                            <p class="mb-30 text-center ff-montserrat">Total number of vendors on this page : {{total_vendors}}</p>
+                            <p class="mb-30 text-center ff-montserrat">Highest product price on this page : <i class="zmdi zmdi-money mr-2"></i>{{highest_price}}</p>
+                            <p class="mb-30 text-center ff-montserrat">Average product price on this page : <i class="zmdi zmdi-money mr-2"></i>{{average_price}}</p>
+                            <p class="mb-30 text-center ff-montserrat">Lowest product price on this page : <i class="zmdi zmdi-money mr-2"></i>{{lowest_price}}</p>
+                            <p class="mb-30 text-center ff-montserrat">Current store stock : {{total_stock}}</p>
                             {% for product in store_products %}
                             <div class="job-box d-md-flex align-items-center justify-content-between mb-30">
                                 <div class="job-left my-4 d-md-flex align-items-center flex-wrap">
@@ -250,13 +229,22 @@ ul {
                                                 <i class="zmdi zmdi-equalizer mr-2"></i> Vendor:{{product.vendor}}
                                             </li>
                                             <li class="mr-md-4">
-                                                <i class="zmdi zmdi-star mr-2"></i> Product Id:{{product.id}}
+                                                <i class="zmdi zmdi-star mr-2"></i> Id:{{product.id}}
                                             </li>
                                             <li class="mr-md-4">
-                                                <i class="zmdi zmdi-money mr-2"></i> price:{{product.variants.price}}
+                                                <i class="zmdi zmdi-money mr-2"></i> price:{{product.variants.0.price}}
                                             </li>
                                         </ul>
+                                        <ul class="d-md-flex flex-wrap text-capitalize ff-open-sans">
+                                          <li class="mr-md-4">
+                                              <i class="zmdi zmdi-time mr-2"></i> Date Added:{{product.published_at}}
+                                          </li>
+                                          <li class="mr-md-4">
+                                              <i class="zmdi zmdi-star mr-2"></i> sku:{{product.variants.0.sku}}
+                                          </li>
+                                      </ul>
                                     </div>
+                                    
                                 </div>
                                 <div class="job-right my-4 flex-shrink-0">
                                     <a href="" class="btn d-block w-100 d-sm-inline-block btn-light"></a>
@@ -271,19 +259,19 @@ ul {
                     <nav aria-label="Page navigation">
                         <ul class="pagination pagination-reset justify-content-center">
                             <li class="page-item disabled">
-                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                                <a class="page-link" tabindex="-1" aria-disabled="true">
                                     <i class="zmdi zmdi-long-arrow-left"></i>
                                 </a>
                             </li>
-                            {%if page_obj.has_previous %}
-                                <li class="page-item"><a class="page-link" href="?page={{page_obj.previous_page_number}}">{{page_obj.previous_page_number}}</a></li>
+                            {%if has_previous %}
+                                <li class="page-item"><a class="page-link" href="{% url 'store_detail' store_link=store_link id=previous_id %}">{{previous_id}}</a></li>
                             {% endif %}
                             <li class="page-item d-none d-md-inline-block"><a class="page-link" href=''>...</a></li>
-                            {%if page_obj.has_next %}
-                                <li class="page-item d-none d-md-inline-block"><a class="page-link" href="?page={{page_obj.next_page_number}}">{{page_obj.next_page_number}}</a></li>
+                            {%if has_next %}
+                                <li class="page-item d-none d-md-inline-block"><a class="page-link" href="{% url 'store_detail' store_link=store_link id=next_id %}">{{next_id}}</a></li>
                             {% endif %}
                             <li class="page-item">
-                                <a class="page-link" href="#">
+                                <a class="page-link">
                                     <i class="zmdi zmdi-long-arrow-right"></i>
                                 </a>
                             </li>
